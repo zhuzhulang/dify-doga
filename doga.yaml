@@ -1,0 +1,31 @@
+provider: doga
+label:
+  zh_Hans: 卡波苏
+  en_US: Doga
+icon_small:
+  en_US: doga_s_en.png
+icon_large:
+  en_US: doga_l_en.png
+supported_model_types:
+  - llm
+configurate_methods:
+  - predefined-model
+provider_credential_schema:
+  credential_form_schemas:
+    - variable: doga_api_key
+      label:
+        en_US: API Key
+      type: secret-input
+      required: true
+      placeholder:
+        zh_Hans: 请在此输入您的API Key
+        en_US: Please enter your API Key
+    - variable: doga_endpoint_url
+      label:
+        zh_Hans: 自定义API endpoint地址
+        en_US: Custom API endpoint URL
+      type: text-input
+      required: false
+      placeholder:
+        zh_Hans: Base URL, e.g. https://api.example.com/v1
+        en_US: Base URL, e.g. https://api.example.com/v1
