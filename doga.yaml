@@ -2,10 +2,16 @@ provider: doga
 label:
   zh_Hans: 卡波苏
   en_US: Doga
+description:
+   zh_Hans: 卡波苏模型
+   en_US: doga model
 icon_small:
-  en_US: doga_s_en.png
+  en_US: icon_s_en.png
+  zh_Hans: icon_s_en.png
 icon_large:
-  en_US: doga_l_en.png
+  en_US: icon_l_en.png
+  zh_Hans: icon_l_en.png
+background: "#93c5fd"
 supported_model_types:
   - llm
 configurate_methods:
