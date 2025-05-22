@@ -4,6 +4,10 @@ from typing import Optional, Union, cast, List
 from core.model_runtime.entities.llm_entities import LLMResult, LLMResultChunk, LLMResultChunkDelta
 from core.model_runtime.model_providers.__base.large_language_model import LargeLanguageModel
 from core.model_runtime.entities import PromptMessage, PromptMessageTool
+from core.model_runtime.entities import (
+    AssistantPromptMessage,
+    LLMUsage
+)
 from core.model_runtime.errors.invoke import (
     InvokeAuthorizationError,
     InvokeBadRequestError,
@@ -44,10 +48,30 @@ class DogaLargeLanguageModel(LargeLanguageModel):
         :param user: unique user id
         :return: full response or stream response chunk generator result
         """
-        response = ["11111","22222","33333","44444"]
         if stream:
+            response_text = ["我是个传奇的人物,","不管你信不信,","这都是个事实。","哈哈"]
+            response = []
+            for text in response_text:
+                chunk = LLMResultChunk(
+                    model=model,
+                    prompt_messages=prompt_messages,
+                    delta=LLMResultChunkDelta(
+                        index=0,
+                        message=AssistantPromptMessage(content=text, tool_calls=[]),
+                    )
+                )
+                response.append(chunk)
             return self._handle_stream_response(response)
-        return self._handle_sync_response(response)
+        else:
+            assistant_prompt_message = AssistantPromptMessage(content="我是个传奇的人物", tool_calls=[])
+            usage = LLMUsage.empty_usage()
+            # usage = self._calc_response_usage(
+            #     model, credentials, usage.prompt_tokens, usage.completion_tokens
+            # )
+            response = dict(
+                model=model, prompt_messages=prompt_messages, message=assistant_prompt_message, usage=usage
+            )
+            return self._handle_sync_response(response)
 
     def get_num_tokens(self, model: str, credentials: dict, prompt_messages: list[PromptMessage],
                     tools: Optional[list[PromptMessageTool]] = None) -> int:
